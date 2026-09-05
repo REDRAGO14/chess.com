@@ -2,8 +2,8 @@ package com.game.chess.Controller;
 
 import com.game.chess.DTO.UserRequest;
 import com.game.chess.DTO.UserResponse;
-import com.game.chess.Model.User;
 import com.game.chess.Service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +28,12 @@ public class UserController {
                 .orElseGet(()->ResponseEntity.notFound().build());
     }
     @PostMapping("")
-    public ResponseEntity<String> create(@RequestBody UserRequest userRequest){
+    public ResponseEntity<String> create(@Valid @RequestBody UserRequest userRequest){
         userService.addUser(userRequest);
         return new ResponseEntity<>("User created Successfully",HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public  ResponseEntity<String> update(@PathVariable Long id, @RequestBody UserRequest userRequest){
+    public  ResponseEntity<String> update(@PathVariable Long id,@Valid @RequestBody UserRequest userRequest){
         boolean updated = userService.updateUser(id, userRequest);
         if(updated) {
             return new ResponseEntity<>("USER UPDATED SUCCESSFULLY", HttpStatus.OK);
