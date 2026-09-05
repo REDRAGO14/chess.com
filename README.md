@@ -21,7 +21,7 @@ A real-time multiplayer chess platform built with **Spring Boot**, **MySQL**, **
 
 The platform is being developed as a modular Spring Boot application for online multiplayer chess.
 
-The current backend starts with a simple layered structure and will grow as new features are implemented.
+The current backend starts with a simple layered structure and will grow as new features are implemented. 
 
 ## ✨ Features
 
