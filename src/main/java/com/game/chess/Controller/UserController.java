@@ -1,13 +1,13 @@
 package com.game.chess.Controller;
 
+import com.game.chess.DTO.UserRequest;
+import com.game.chess.DTO.UserResponse;
 import com.game.chess.Model.User;
 import com.game.chess.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.lang.model.element.NestingKind;
 import java.util.List;
 
 @RestController
@@ -15,24 +15,26 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
     @GetMapping("")
-    public ResponseEntity<List<User>> getAll(){
+    public ResponseEntity<List<UserResponse>> getAll(){
         return ResponseEntity.ok(userService.fetchAll());
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable Long id){
+    public ResponseEntity<UserResponse> getById(@PathVariable Long id){
         return userService.fetchById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(()->ResponseEntity.notFound().build());
     }
     @PostMapping("")
-    public ResponseEntity<String> create(@RequestBody User user){
-        userService.addUser(user);
+    public ResponseEntity<String> create(@RequestBody UserRequest userRequest){
+        userService.addUser(userRequest);
         return new ResponseEntity<>("User created Successfully",HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public  ResponseEntity<String> update(@PathVariable Long id, @RequestBody User user){
-        boolean updated = userService.updateUser(id, user);
+    public  ResponseEntity<String> update(@PathVariable Long id, @RequestBody UserRequest userRequest){
+        boolean updated = userService.updateUser(id, userRequest);
         if(updated) {
             return new ResponseEntity<>("USER UPDATED SUCCESSFULLY", HttpStatus.OK);
         }
