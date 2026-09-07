@@ -2,6 +2,7 @@ package com.game.chess.Service;
 
 import com.game.chess.DTO.UserRequest;
 import com.game.chess.DTO.UserResponse;
+import com.game.chess.Exception.UserNameAlreadyInUseException;
 import com.game.chess.Model.User;
 import com.game.chess.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,9 @@ public class UserService {
     public void addUser(UserRequest userRequest) {
         User user = new User();
         updateFromUserRequest(user, userRequest);
-        userRepository.save(user);
+        List<User> matchUser = userRepository.findByUserName(user.getUserName());
+            userRepository.save(user);
+
     }
 
 
