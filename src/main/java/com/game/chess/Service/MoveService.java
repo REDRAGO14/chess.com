@@ -1,6 +1,5 @@
 package com.game.chess.Service;
 
-import com.game.chess.DTO.MoveCreateRequest;
 import com.game.chess.DTO.MoveRequest;
 import com.game.chess.DTO.MoveResponse;
 import com.game.chess.Model.Game;
@@ -26,7 +25,6 @@ public class MoveService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private GameRepository gameRepository;
 
