@@ -3,6 +3,7 @@ package com.game.chess.Service;
 import com.game.chess.DTO.UserRequest;
 import com.game.chess.DTO.UserResponse;
 import com.game.chess.Exception.UserNameAlreadyInUseException;
+import com.game.chess.Exception.UserNotFound;
 import com.game.chess.Model.User;
 import com.game.chess.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,10 @@ public class UserService {
 
 
 
-    public Optional<UserResponse> fetchById(Long id) {
+    public UserResponse fetchById(Long id) {
         return userRepository.findById(id)
-                .map(user -> mapToUserResponse(user));
+                .map(user -> mapToUserResponse(user))
+                .orElseThrow(() -> new UserNotFound("user not found"));
     }
 
     public void addUser(UserRequest userRequest) {
@@ -43,17 +45,23 @@ public class UserService {
     }
 
 
-    public boolean updateUser(Long id, UserRequest userRequest) {
-       return userRepository.findById(id)
+    public void updateUser(Long id, UserRequest userRequest) {
+        userRepository.findById(id)
                 .map(existingUser -> {
                     updateFromUserRequest(existingUser, userRequest);
                     userRepository.save(existingUser);
                     return true;
-                }).orElse(false);
+                }).orElseThrow(()-> new UserNotFound("user not found"));
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElse(null);
+        if(user!=null){
+            userRepository.deleteById(id);
+        }else{
+            throw  new UserNotFound("User Not Found");
+        }
+
     }
 
     private void updateFromUserRequest(User user, UserRequest userRequest) {

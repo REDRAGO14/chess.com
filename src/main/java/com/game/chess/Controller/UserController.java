@@ -2,6 +2,7 @@ package com.game.chess.Controller;
 
 import com.game.chess.DTO.UserRequest;
 import com.game.chess.DTO.UserResponse;
+import com.game.chess.Model.User;
 import com.game.chess.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable Long id){
-        return userService.fetchById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(()->ResponseEntity.notFound().build());
+        UserResponse user = userService.fetchById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
     @PostMapping("")
     public ResponseEntity<String> create(@Valid @RequestBody UserRequest userRequest){
@@ -34,11 +34,9 @@ public class UserController {
     }
     @PutMapping("/{id}")
     public  ResponseEntity<String> update(@PathVariable Long id,@Valid @RequestBody UserRequest userRequest){
-        boolean updated = userService.updateUser(id, userRequest);
-        if(updated) {
-            return new ResponseEntity<>("USER UPDATED SUCCESSFULLY", HttpStatus.OK);
-        }
-        return ResponseEntity.notFound().build();
+        userService.updateUser(id, userRequest);
+        return new ResponseEntity<>("USER UPDATED SUCCESSFULLY", HttpStatus.OK);
+
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
