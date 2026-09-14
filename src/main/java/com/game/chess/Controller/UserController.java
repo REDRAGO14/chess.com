@@ -5,14 +5,18 @@ import com.game.chess.DTO.UserResponse;
 import com.game.chess.Model.User;
 import com.game.chess.Service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@Validated
 public class UserController {
     @Autowired
     private UserService userService;
@@ -33,7 +37,8 @@ public class UserController {
         return new ResponseEntity<>("User created Successfully",HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public  ResponseEntity<String> update(@PathVariable Long id,@Valid @RequestBody UserRequest userRequest){
+    public  ResponseEntity<String> update(@PathVariable @NotNull(message = "User ID must not be null")
+                                              @Positive(message = "User ID must be a positive number") Long id, @Valid @RequestBody UserRequest userRequest){
         userService.updateUser(id, userRequest);
         return new ResponseEntity<>("USER UPDATED SUCCESSFULLY", HttpStatus.OK);
 
