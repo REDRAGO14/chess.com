@@ -33,7 +33,12 @@ public class UserService {
         User user = new User();
         updateFromUserRequest(user, userRequest);
         List<User> matchUser = userRepository.findByUserName(user.getUserName());
+        if(matchUser.isEmpty()){
             userRepository.save(user);
+        }else{
+            throw new UserNameAlreadyInUseException("Username has been taken try other");
+        }
+
 
     }
 
