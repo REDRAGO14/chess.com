@@ -17,6 +17,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     //here i have handled custom exception
     @ExceptionHandler(UserNameAlreadyInUseException.class)
     public ResponseEntity<ErrorResponse> handleUsernameAlreadyInUseException(UserNameAlreadyInUseException ex, HttpServletRequest request){
