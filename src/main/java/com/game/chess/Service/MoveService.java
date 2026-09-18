@@ -8,7 +8,7 @@ import com.game.chess.Model.User;
 import com.game.chess.Repository.GameRepository;
 import com.game.chess.Repository.MoveRepository;
 import com.game.chess.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +18,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MoveService {
 
-    @Autowired
-    private MoveRepository moveRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private GameRepository gameRepository;
+    private final MoveRepository moveRepository;
+    private final UserRepository userRepository;
+    private final GameRepository gameRepository;
 
     @Transactional
     public MoveResponse createMove(MoveRequest request) {
