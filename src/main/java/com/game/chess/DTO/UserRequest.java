@@ -1,9 +1,11 @@
 package com.game.chess.DTO;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record UserRequest (
+        @NotNull
         @Size(max = 16, min = 3 , message = "USER NAME MUST BE BETWEEN 3 TO 16 CHARACTER")
         String userName,
         @Email(message = "FILL VALID EMAIL")

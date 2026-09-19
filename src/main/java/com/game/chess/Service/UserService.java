@@ -2,19 +2,25 @@ package com.game.chess.Service;
 
 import com.game.chess.DTO.UserRequest;
 import com.game.chess.DTO.UserResponse;
+import com.game.chess.Exception.UserNameAlreadyInUseException;
+import com.game.chess.Exception.UserNotFound;
 import com.game.chess.Model.User;
 import com.game.chess.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public List<UserResponse> fetchAll(){
        return  userRepository.findAll().stream()
                 .map(user -> mapToUserResponse(user))
@@ -23,29 +29,43 @@ public class UserService {
 
 
 
-    public Optional<UserResponse> fetchById(Long id) {
+    public UserResponse fetchById(Long id) {
         return userRepository.findById(id)
-                .map(user -> mapToUserResponse(user));
+                .map(user -> mapToUserResponse(user))
+                .orElseThrow(() -> new UserNotFound("user not found"));
     }
 
     public void addUser(UserRequest userRequest) {
         User user = new User();
         updateFromUserRequest(user, userRequest);
-        userRepository.save(user);
+        List<User> matchUser = userRepository.findByUserName(user.getUserName());
+        if(matchUser.isEmpty()){
+            userRepository.save(user);
+        }else{
+            throw new UserNameAlreadyInUseException("Username has been taken try other");
+        }
+
+
     }
 
 
-    public boolean updateUser(Long id, UserRequest userRequest) {
-       return userRepository.findById(id)
+    public void updateUser(Long id, UserRequest userRequest) {
+        userRepository.findById(id)
                 .map(existingUser -> {
                     updateFromUserRequest(existingUser, userRequest);
                     userRepository.save(existingUser);
                     return true;
-                }).orElse(false);
+                }).orElseThrow(()-> new UserNotFound("user not found"));
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElse(null);
+        if(user!=null){
+            userRepository.deleteById(id);
+        }else{
+            throw  new UserNotFound("User Not Found");
+        }
+
     }
 
     private void updateFromUserRequest(User user, UserRequest userRequest) {
