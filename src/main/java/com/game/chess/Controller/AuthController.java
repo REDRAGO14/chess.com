@@ -1,0 +1,7 @@
+package com.game.chess.Controller;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AuthController {
+}
