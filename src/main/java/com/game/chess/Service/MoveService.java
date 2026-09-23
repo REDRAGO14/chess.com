@@ -2,6 +2,7 @@ package com.game.chess.Service;
 
 import com.game.chess.DTO.MoveRequest;
 import com.game.chess.DTO.MoveResponse;
+import com.game.chess.Model.Game;
 import com.game.chess.Model.Move;
 import com.game.chess.Model.User;
 import com.game.chess.Repository.MoveRepository;
