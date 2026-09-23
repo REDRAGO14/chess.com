@@ -1,33 +1,29 @@
 package com.game.chess.Controller;
 
-
-import com.game.chess.DTO.UserRequest;
-import com.game.chess.DTO.UserResponse;
-import com.game.chess.Service.AuthService;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.game.chess.Model.AuthRequest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
 public class AuthController {
-    private final AuthService authService;
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
-    @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(
-            @Valid @RequestBody UserRequest request) {
-        UserResponse response =
-                authService.register(request);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+    private final AuthenticationManager authenticationManager;
+
+    public AuthController(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
     }
 
-
+    @PostMapping("/login")
+    public String signIn(@RequestBody AuthRequest authRequest){
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password())
+            );
+            return "authenticated";
+        }catch (Exception e){
+            throw e;
+        }
+    }
 }

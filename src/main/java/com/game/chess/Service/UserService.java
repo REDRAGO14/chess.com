@@ -7,6 +7,7 @@ import com.game.chess.Exception.UserNotFound;
 import com.game.chess.Model.User;
 import com.game.chess.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +15,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    private final PasswordEncoder passwordEncoder;
+
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
 
@@ -38,11 +42,12 @@ public class UserService {
     public void addUser(UserRequest userRequest) {
         User user = new User();
         updateFromUserRequest(user, userRequest);
-        List<User> matchUser = userRepository.findByUserName(user.getUserName());
-        if(matchUser.isEmpty()){
+
+         User matchUser = userRepository.findByUserName(user.getUserName()).orElse(null);
+        if(matchUser == null){
             userRepository.save(user);
         }else{
-            throw new UserNameAlreadyInUseException("Username has been taken try other");
+            throw new UserNameAlreadyInUseException("Username has been already taken try another username");
         }
 
 
@@ -71,7 +76,7 @@ public class UserService {
     private void updateFromUserRequest(User user, UserRequest userRequest) {
         user.setUserName(userRequest.userName());
         user.setEmail(userRequest.email());
-        user.setPassword(userRequest.password());
+        user.setPassword(passwordEncoder.encode(userRequest.password()));
     }
 
     private UserResponse mapToUserResponse(User user) {
