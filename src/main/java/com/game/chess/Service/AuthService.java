@@ -48,9 +48,9 @@ import org.springframework.http.HttpStatus; import org.springframework.security.
 
 
         return new UserResponse(
-                savedUser.getId(),
                 savedUser.getUserName(),
-                savedUser.getEmail()
+                savedUser.getEmail(),
+                savedUser.getId()
         );
     }
 }
