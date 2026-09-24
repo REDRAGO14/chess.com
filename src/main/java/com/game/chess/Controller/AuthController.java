@@ -24,7 +24,7 @@ public class AuthController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password())
             );
-            return "authenticated";
+            return jwtUtil.generateToken(authRequest.username());
         }catch (Exception e){
             throw e;
         }
