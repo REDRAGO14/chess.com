@@ -43,6 +43,8 @@ import org.springframework.http.HttpStatus; import org.springframework.security.
                 passwordEncoder.encode(request.password())
         );
 
+        user.setRole("USER");
+
 
         User savedUser = userRepository.save(user);
 

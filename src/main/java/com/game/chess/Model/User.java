@@ -32,6 +32,8 @@ public class User implements UserDetails {
 
     private String email;
 
+    private String role;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -44,13 +46,20 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(
+                new org.springframework.security.core.authority.SimpleGrantedAuthority(
+                        "ROLE_" + role
+                )
+        );
     }
 
     @Override
     public String getUsername() {
         return userName;
     }
+
+    @Override
+    public String getPassword() {return password;}
 
     @Override
     public boolean isAccountNonExpired() {

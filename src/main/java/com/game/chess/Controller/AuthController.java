@@ -55,6 +55,6 @@ public class AuthController {
 
         User user = (User) authentication.getPrincipal();
 
-        return jwtService.generateToken(user);
+        return jwtService.generateToken(user.getUsername());
     }
 }

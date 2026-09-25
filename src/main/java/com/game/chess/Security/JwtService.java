@@ -1,6 +1,5 @@
 package com.game.chess.Security;
 
-import com.game.chess.Model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -14,58 +13,50 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private final SecretKey secretKey;
+    @Value("${jwt.secret}")
+    private String secret;
 
-    private final long expirationTime = 24 * 60 * 60 * 1000;
+    @Value("${jwt.expiration}")
+    private long expiration;
 
-    public JwtService(@Value("${jwt.secret}") String secret) {
-
-        this.secretKey = Keys.hmacShaKeyFor(
+    private SecretKey getSigningKey() {
+        return Keys.hmacShaKeyFor(
                 secret.getBytes(StandardCharsets.UTF_8)
         );
     }
 
-    public String generateToken(User user) {
-
-        Date now = new Date();
-
-        Date expiration = new Date(
-                now.getTime() + expirationTime
-        );
+    public String generateToken(String username) {
 
         return Jwts.builder()
-                .subject(user.getEmail())
-                .issuedAt(now)
-                .expiration(expiration)
-                .signWith(secretKey)
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(getSigningKey())
                 .compact();
     }
 
-
     public String extractEmail(String token) {
 
-        Claims claims = Jwts.parser()
-                .verifyWith(secretKey)
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
-                .getPayload();
-
-        return claims.getSubject();
+                .getPayload()
+                .getSubject();
     }
 
     public boolean isTokenValid(String token) {
 
         try {
-
-            Jwts.parser()
-                    .verifyWith(secretKey)
+            Claims claims = Jwts.parser()
+                    .verifyWith(getSigningKey())
                     .build()
-                    .parseSignedClaims(token);
+                    .parseSignedClaims(token)
+                    .getPayload();
 
-            return true;
+            return claims.getExpiration().after(new Date());
 
         } catch (Exception e) {
-
             return false;
         }
     }

@@ -3,6 +3,7 @@ package com.game.chess.Controller;
 
 
 import com.game.chess.Model.Game;
+import com.game.chess.Repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

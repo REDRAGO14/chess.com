@@ -42,6 +42,7 @@ public class UserService {
     public void addUser(UserRequest userRequest) {
         User user = new User();
         updateFromUserRequest(user, userRequest);
+        user.setRole("USER");
 
          User matchUser = userRepository.findByUserName(user.getUserName()).orElse(null);
         if(matchUser == null){
@@ -77,6 +78,7 @@ public class UserService {
         user.setUserName(userRequest.userName());
         user.setEmail(userRequest.email());
         user.setPassword(passwordEncoder.encode(userRequest.password()));
+
     }
 
     private UserResponse mapToUserResponse(User user) {
@@ -85,7 +87,7 @@ public class UserService {
                 user.getEmail(),
                 user.getId()
         );
-        );
+
     }
 }
 
