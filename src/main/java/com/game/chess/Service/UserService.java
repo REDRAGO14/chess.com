@@ -85,7 +85,7 @@ public class UserService {
                 user.getEmail(),
                 user.getId()
         );
-        );
+
     }
 }
 
