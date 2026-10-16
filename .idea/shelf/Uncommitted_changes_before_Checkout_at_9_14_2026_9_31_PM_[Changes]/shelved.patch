@@ -1,0 +1,39 @@
+Index: src/main/java/com/game/chess/Controller/GameController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.game.chess.Controller;\r\n\r\n\r\n\r\nimport com.game.chess.Model.Game;\r\nimport com.game.chess.Repository.GameRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\n@RestController\r\n@RequestMapping(\"/api/games\")\r\npublic class GameController {\r\n\r\n    @Autowired\r\n    private GameRepository gameRepository;\r\n    @GetMapping(\"/{id}\")\r\n    public ResponseEntity<Game> getGameById(@PathVariable Long id) {\r\n        return gameRepository.findById(id)\r\n                .map(ResponseEntity::ok)\r\n                .orElse(ResponseEntity.notFound().build());\r\n    }\r\n    @PostMapping(\"\")\r\n    public ResponseEntity<Game> createGame() {\r\n        Game saved = gameRepository.save(new Game());\r\n        return new ResponseEntity<>(saved, HttpStatus.CREATED);\r\n    }\r\n}
+===================================================================
+diff --git a/src/main/java/com/game/chess/Controller/GameController.java b/src/main/java/com/game/chess/Controller/GameController.java
+--- a/src/main/java/com/game/chess/Controller/GameController.java	(revision 3f6f3d53414558e2eae42b321990b1f175a39066)
++++ b/src/main/java/com/game/chess/Controller/GameController.java	(date 1789410672509)
+@@ -1,29 +1,0 @@
+-package com.game.chess.Controller;
+-
+-
+-
+-import com.game.chess.Model.Game;
+-import com.game.chess.Repository.GameRepository;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.http.HttpStatus;
+-import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.*;
+-
+-@RestController
+-@RequestMapping("/api/games")
+-public class GameController {
+-
+-    @Autowired
+-    private GameRepository gameRepository;
+-    @GetMapping("/{id}")
+-    public ResponseEntity<Game> getGameById(@PathVariable Long id) {
+-        return gameRepository.findById(id)
+-                .map(ResponseEntity::ok)
+-                .orElse(ResponseEntity.notFound().build());
+-    }
+-    @PostMapping("")
+-    public ResponseEntity<Game> createGame() {
+-        Game saved = gameRepository.save(new Game());
+-        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+-    }
+-}
+\ No newline at end of file
