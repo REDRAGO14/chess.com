@@ -77,8 +77,24 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.bhlangonijr</groupId>
+			<artifactId>chesslib</artifactId>
+			<version>1.3.7</version> <!-- or latest stable version -->
+		</dependency>
 
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<build>
 		<plugins>
 			<!-- Compiler configuration enabling Lombok annotation processor -->
