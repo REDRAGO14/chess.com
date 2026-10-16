@@ -28,6 +28,17 @@ public class ChessBoardService {
 
         return board;
     }
+    /**
+     * Updates the game's FEN string in the database after a board changes.
+     */
+    public void saveBoardToGame(Long gameId, Board board) {
+        Game game = gameRepository.findById(gameId)
+                .orElseThrow(() -> new UsernameNotFoundException("Game " + gameId + " not found"));
+
+        // Extract the updated FEN string from chesslib and save to database
+        game.setFen(board.getFen());
+        gameRepository.save(game);
+    }
 
 
 }
