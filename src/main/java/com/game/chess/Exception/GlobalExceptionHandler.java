@@ -31,6 +31,33 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "USER_NOT_FOUND", ex.getMessage(), req.getRequestURI());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+    //Game not found exception
+    @ExceptionHandler(GameNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleGameNotFound(GameNotFoundException ex, HttpServletRequest req){
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "GAME_NOT_FOUND", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(InvalidGameStateException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidGameState(InvalidGameStateException ex, HttpServletRequest req){
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), "INVALID_GAME_STATE", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(NotAGameParticipantException.class)
+    public ResponseEntity<ErrorResponse> handleNotParticipant(NotAGameParticipantException ex, HttpServletRequest req){
+        ErrorResponse error = new ErrorResponse(HttpStatus.FORBIDDEN.value(), "NOT_A_PARTICIPANT", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    }
+    // move error exception
+    @ExceptionHandler(InvalidMoveException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidMove(InvalidMoveException ex, HttpServletRequest req){
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "INVALID_MOVE", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(NotYourTurnException.class)
+    public ResponseEntity<ErrorResponse> handleNotYourTurn(NotYourTurnException ex, HttpServletRequest req){
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), "NOT_YOUR_TURN", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
     //here i have handled dto level validation
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest req){

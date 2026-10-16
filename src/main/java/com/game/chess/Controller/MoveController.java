@@ -4,7 +4,7 @@ import com.game.chess.DTO.MoveRequest;
 import com.game.chess.DTO.MoveResponse;
 import com.game.chess.Service.MoveService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/moves")
+@RequiredArgsConstructor
 public class MoveController {
 
-    @Autowired
-    private MoveService moveService;
+    private final MoveService moveService;
 
     @PostMapping("")
     public ResponseEntity<?> createMove(@Valid @RequestBody MoveRequest request) {
