@@ -4,7 +4,46 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="Game service and Game status" />
+    <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="Game service and Game status">
+      <change afterPath="$PROJECT_DIR$/src/test/java/MoveServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/MoveRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/MoveRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/MoveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/MoveService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/MoveValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/ChessApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/ChessApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/GameController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/MoveController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/MoveController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/ErrorResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/ErrorResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/MoveRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/MoveRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/MoveResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/MoveResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/UserRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/UserRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/UserResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/UserResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/GlobalExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/UserNameAlreadyInUseException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/UserNameAlreadyInUseException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/UserNotFound.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/UserNotFound.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/AuthRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Model/AuthRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Model/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/Move.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Model/Move.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Repository/GameRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Repository/GameRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Repository/MoveRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Repository/MoveRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Repository/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Security/JwtAuthenticationFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Security/JwtAuthenticationFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Security/JwtService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Security/JwtService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Security/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Service/AuthService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/CustomUserDetailService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Service/CustomUserDetailService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/MoveService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Service/MoveService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Util/JWTUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Util/JWTUtil.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,11 +106,16 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.ChessApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "Biruk",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="chess.com" />
