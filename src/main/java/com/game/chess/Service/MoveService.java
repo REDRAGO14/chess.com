@@ -35,6 +35,7 @@ public class MoveService {
     private final MoveRepository moveRepository;
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
+    private final MoveHistoryService moveHistoryService;
 
 
     @Transactional
@@ -80,7 +81,8 @@ public class MoveService {
             throw new InvalidMoveException("Illegal move: " + from + " to " + to);
         }
 
-
+        // 1. COMPUTE SAN NOTATION BEFORE THE MOVE HAPPENS
+        String sanNotation = moveHistoryService.toSan(game.getFen(), chessMove); // <--- Added this line
         Piece captured = board.getPiece(to);
         boolean pawnChangedFile = piece.getPieceType() == PieceType.PAWN && from.getFile() != to.getFile();
         if (captured == Piece.NONE && pawnChangedFile) {
@@ -104,6 +106,7 @@ public class MoveService {
         move.setMoveNumber(moveRepository.countByGameId(game.getId()) + 1);
         move.setFromSquare(request.getFromSquare());
         move.setToSquare(request.getToSquare());
+        move.setSan(sanNotation); // <--- Saved your human-readable notation here!
         move.setPieceMoved(piece.name());
         move.setCapturedPiece(captured == Piece.NONE ? null : captured.name());
 

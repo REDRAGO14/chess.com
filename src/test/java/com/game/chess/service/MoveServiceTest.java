@@ -1,38 +1,56 @@
+package com.game.chess.service;
+
 import com.game.chess.DTO.MoveRequest;
 import com.game.chess.DTO.MoveResponse;
 import com.game.chess.Exception.InvalidGameStateException;
 import com.game.chess.Exception.InvalidMoveException;
 import com.game.chess.Exception.NotAGameParticipantException;
 import com.game.chess.Exception.NotYourTurnException;
-import com.game.chess.Model.Game;
-import com.game.chess.Model.GameStatus;
-import com.game.chess.Model.Move;
-import com.game.chess.Model.User;
+import com.game.chess.Model.*;
 import com.game.chess.Repository.GameRepository;
 import com.game.chess.Repository.MoveRepository;
 import com.game.chess.Repository.UserRepository;
+import com.game.chess.Service.MoveHistoryService;
 import com.game.chess.Service.MoveService;
+import com.github.bhlangonijr.chesslib.move.Move;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-import java.util.Optional;
+import java.util.Optional; // Note: java.util.Optional
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT) // Prevents UnnecessaryStubbingException
 class MoveServiceTest {
 
     @Mock MoveRepository moveRepository;
     @Mock UserRepository userRepository;
     @Mock GameRepository gameRepository;
+    @Mock
+    MoveHistoryService moveHistoryService;
+
     @InjectMocks
     MoveService moveService;
+
+    @BeforeEach
+    void setUp() {
+        // Common lenient stubs for saves and SAN generation
+        lenient().when(moveRepository.countByGameId(any())).thenReturn(0);
+        lenient().when(gameRepository.save(any(Game.class))).thenAnswer(i -> i.getArgument(0));
+        lenient().when(moveRepository.save(any(GameMove.class))).thenAnswer(i -> i.getArgument(0));
+        lenient().when(moveHistoryService.toSan(anyString(), any(Move.class))).thenReturn("e4");
+    }
 
     private User user(Long id, String name) {
         User u = new User();
@@ -47,6 +65,7 @@ class MoveServiceTest {
         g.setWhiteplayer(user(1L, "abebe"));
         g.setBlackplayer(user(2L, "almaz"));
         g.setStatus(GameStatus.ACTIVE);
+        g.setFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); // <-- Add this!
         return g;
     }
 
@@ -64,23 +83,17 @@ class MoveServiceTest {
         when(userRepository.findById(player.getId())).thenReturn(Optional.of(player));
     }
 
-    private void stubSaves(int movesAlreadyPlayed) {
-        when(moveRepository.countByGameId(10L)).thenReturn(movesAlreadyPlayed);
-        when(gameRepository.save(any(Game.class))).thenAnswer(i -> i.getArgument(0));
-        when(moveRepository.save(any(Move.class))).thenAnswer(i -> i.getArgument(0));
-    }
-
     @Test
     void whiteCanPlayE2E4() {
         Game game = activeGame();
         stubLookups(game, game.getWhiteplayer());
-        stubSaves(0);
 
         MoveResponse res = moveService.createMove(req(1L, "e2", "e4"));
 
-        assertEquals("WHITE_PAWN", res.getPieceMoved());
-        assertNull(res.getCapturedPiece());
-        assertEquals(1, res.getMoveNumber());
+        assertEquals("WHITE_PAWN", res.pieceMoved());
+        assertNull(res.capturedPiece());
+        assertEquals(1, res.moveNumber());
+        assertEquals("e4", res.san()); // Verifies SAN notation response
 
         assertTrue(game.getFen().startsWith("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b"));
         assertEquals(GameStatus.ACTIVE, game.getStatus());
@@ -99,9 +112,9 @@ class MoveServiceTest {
         Game game = activeGame();
         stubLookups(game, game.getWhiteplayer());
 
-        assertThrows(InvalidMoveException.class, () -> moveService.createMove(req(1L, "e2", "e5")));
+        // Trying to move a Rook diagonally (a1 to b2) is universally illegal in chess
+        assertThrows(InvalidMoveException.class, () -> moveService.createMove(req(1L, "a1", "b2")));
     }
-
     @Test
     void movingFromAnEmptySquareIsRejected() {
         Game game = activeGame();
@@ -129,11 +142,10 @@ class MoveServiceTest {
 
     @Test
     void checkmateFinishesTheGame() {
-
         Game game = activeGame();
         game.setFen("rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2");
         stubLookups(game, game.getBlackplayer());
-        stubSaves(3);
+        when(moveRepository.countByGameId(10L)).thenReturn(3);
 
         moveService.createMove(req(2L, "d8", "h4"));
 
