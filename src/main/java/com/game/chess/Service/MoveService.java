@@ -3,7 +3,7 @@ package com.game.chess.Service;
 import com.game.chess.DTO.MoveRequest;
 import com.game.chess.DTO.MoveResponse;
 import com.game.chess.Model.Game;
-import com.game.chess.Model.Move;
+import com.game.chess.Model.GameMove;
 import com.game.chess.Model.User;
 import com.game.chess.Repository.MoveRepository;
 import com.game.chess.Repository.UserRepository;
@@ -37,16 +37,16 @@ public class MoveService {
 
         int nextMoveNumber = moveRepository.countByGameId(request.getGameId()) + 1;
 
-        Move move = new Move();
-        move.setGame(game);
-        move.setPlayer(player);
-        move.setMoveNumber(nextMoveNumber);
-        move.setFromSquare(request.getFromSquare());
-        move.setToSquare(request.getToSquare());
-        move.setPieceMoved(request.getPieceMoved());
-        move.setCapturedPiece(request.getCapturedPiece());
+        GameMove gameMove = new GameMove();
+        gameMove.setGame(game);
+        gameMove.setPlayer(player);
+        gameMove.setMoveNumber(nextMoveNumber);
+        gameMove.setFromSquare(request.getFromSquare());
+        gameMove.setToSquare(request.getToSquare());
+        gameMove.setPieceMoved(request.getPieceMoved());
+        gameMove.setCapturedPiece(request.getCapturedPiece());
 
-        Move saved = moveRepository.save(move);
+        GameMove saved = moveRepository.save(gameMove);
         return toResponse(saved);
     }
 
@@ -57,18 +57,18 @@ public class MoveService {
                 .collect(Collectors.toList());
     }
 
-    private MoveResponse toResponse(Move move) {
+    private MoveResponse toResponse(GameMove gameMove) {
         return new MoveResponse(
-                move.getId(),
-                move.getGame().getId(),
-                move.getPlayer().getId(),
-                move.getPlayer().getUserName(),
-                move.getMoveNumber(),
-                move.getFromSquare(),
-                move.getToSquare(),
-                move.getPieceMoved(),
-                move.getCapturedPiece(),
-                move.getCreatedAt()
+                gameMove.getId(),
+                gameMove.getGame().getId(),
+                gameMove.getPlayer().getId(),
+                gameMove.getPlayer().getUserName(),
+                gameMove.getMoveNumber(),
+                gameMove.getFromSquare(),
+                gameMove.getToSquare(),
+                gameMove.getPieceMoved(),
+                gameMove.getCapturedPiece(),
+                gameMove.getCreatedAt()
         );
     }
 }
