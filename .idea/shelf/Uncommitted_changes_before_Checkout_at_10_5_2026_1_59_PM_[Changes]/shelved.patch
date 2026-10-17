@@ -1,0 +1,65 @@
+Index: src/main/java/com/game/chess/Service/MoveService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.game.chess.Service;\r\n\r\nimport com.game.chess.DTO.MoveRequest;\r\nimport com.game.chess.DTO.MoveResponse;\r\nimport com.game.chess.Model.Game;\r\nimport com.game.chess.Model.Move;\r\nimport com.game.chess.Model.User;\r\nimport com.game.chess.Repository.MoveRepository;\r\nimport com.game.chess.Repository.UserRepository;\r\nimport lombok.RequiredArgsConstructor;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.stereotype.Service;\r\nimport org.springframework.transaction.annotation.Transactional;\r\nimport org.springframework.web.server.ResponseStatusException;\r\n\r\nimport java.util.List;\r\nimport java.util.stream.Collectors;\r\n\r\n@Service\r\n@RequiredArgsConstructor\r\npublic class MoveService {\r\n\r\n    private final MoveRepository moveRepository;\r\n    private final UserRepository userRepository;\r\n    private final GameRepository gameRepository;\r\n\r\n    @Transactional\r\n    public MoveResponse createMove(MoveRequest request) {\r\n        User player = userRepository.findById(request.getPlayerId())\r\n                .orElseThrow(() -> new ResponseStatusException(\r\n                        HttpStatus.NOT_FOUND, \"Player not found: \" + request.getPlayerId()));\r\n\r\n        Game game = gameRepository.findById(request.getGameId())\r\n                .orElseThrow(() -> new ResponseStatusException(\r\n                        HttpStatus.NOT_FOUND, \"Game not found: \" + request.getGameId()));\r\n\r\n        int nextMoveNumber = moveRepository.countByGameId(request.getGameId()) + 1;\r\n\r\n        Move move = new Move();\r\n        move.setGame(game);\r\n        move.setPlayer(player);\r\n        move.setMoveNumber(nextMoveNumber);\r\n        move.setFromSquare(request.getFromSquare());\r\n        move.setToSquare(request.getToSquare());\r\n        move.setPieceMoved(request.getPieceMoved());\r\n        move.setCapturedPiece(request.getCapturedPiece());\r\n\r\n        Move saved = moveRepository.save(move);\r\n        return toResponse(saved);\r\n    }\r\n\r\n    public List<MoveResponse> getMovesForGame(Long gameId) {\r\n        return moveRepository.findByGameIdOrderByMoveNumberAsc(gameId)\r\n                .stream()\r\n                .map(this::toResponse)\r\n                .collect(Collectors.toList());\r\n    }\r\n\r\n    private MoveResponse toResponse(Move move) {\r\n        return new MoveResponse(\r\n                move.getId(),\r\n                move.getGame().getId(),\r\n                move.getPlayer().getId(),\r\n                move.getPlayer().getUserName(),\r\n                move.getMoveNumber(),\r\n                move.getFromSquare(),\r\n                move.getToSquare(),\r\n                move.getPieceMoved(),\r\n                move.getCapturedPiece(),\r\n                move.getCreatedAt()\r\n        );\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/game/chess/Service/MoveService.java b/src/main/java/com/game/chess/Service/MoveService.java
+--- a/src/main/java/com/game/chess/Service/MoveService.java	(revision 8644654bc0b4b80e958d53a282259042ee7859d4)
++++ b/src/main/java/com/game/chess/Service/MoveService.java	(date 1791197867656)
+@@ -5,6 +5,7 @@
+ import com.game.chess.Model.Game;
+ import com.game.chess.Model.Move;
+ import com.game.chess.Model.User;
++import com.game.chess.Repository.GameRepository;
+ import com.game.chess.Repository.MoveRepository;
+ import com.game.chess.Repository.UserRepository;
+ import lombok.RequiredArgsConstructor;
+@@ -23,6 +24,7 @@
+     private final MoveRepository moveRepository;
+     private final UserRepository userRepository;
+     private final GameRepository gameRepository;
++    private final MoveValidator moveValidator;
+ 
+     @Transactional
+     public MoveResponse createMove(MoveRequest request) {
+@@ -34,6 +36,8 @@
+                 .orElseThrow(() -> new ResponseStatusException(
+                         HttpStatus.NOT_FOUND, "Game not found: " + request.getGameId()));
+ 
++        moveValidator.validate(request, game, player);
++
+         int nextMoveNumber = moveRepository.countByGameId(request.getGameId()) + 1;
+ 
+         Move move = new Move();
+Index: src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.game.chess.Exception;\r\n\r\nimport com.game.chess.DTO.ErrorResponse;\r\nimport jakarta.servlet.http.HttpServletRequest;\r\nimport jakarta.validation.ConstraintViolationException;\r\nimport org.slf4j.Logger;\r\nimport org.slf4j.LoggerFactory;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.security.authentication.BadCredentialsException;\r\nimport org.springframework.web.bind.MethodArgumentNotValidException;\r\nimport org.springframework.web.bind.annotation.ExceptionHandler;\r\nimport org.springframework.web.bind.annotation.RestControllerAdvice;\r\n\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\n\r\n@RestControllerAdvice\r\npublic class GlobalExceptionHandler {\r\n    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);\r\n\r\n    //here i have handled custom exception\r\n    @ExceptionHandler(UserNameAlreadyInUseException.class)\r\n    public ResponseEntity<ErrorResponse> handleUsernameAlreadyInUseException(UserNameAlreadyInUseException ex, HttpServletRequest request){\r\n        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), \"USERNAME_EXIST\", ex.getMessage(), request.getRequestURI());\r\n        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);\r\n    }\r\n    @ExceptionHandler(UserNotFound.class)\r\n    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFound ex, HttpServletRequest req){\r\n        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), \"USER_NOT_FOUND\", ex.getMessage(), req.getRequestURI());\r\n        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);\r\n    }\r\n    //here i have handled dto level validation\r\n    @ExceptionHandler(MethodArgumentNotValidException.class)\r\n    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest req){\r\n        Map<String, String> fieldErrors = new HashMap<>();\r\n        ex.getBindingResult().getFieldErrors().forEach(fieldError -> fieldErrors.put(fieldError.getField(), fieldError.getDefaultMessage()));\r\n        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), \"VALIDATION_FAILD\", ex.getMessage(), req.getRequestURI(), fieldErrors);\r\n        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);\r\n    }\r\n    @ExceptionHandler(BadCredentialsException.class)\r\n    public ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException ex, HttpServletRequest request){\r\n        ErrorResponse error = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), \"INVALID_CREDENTIALS\", \"PLEASE ENTER VALID CREDENTIALS\", request.getRequestURI());\r\n        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);\r\n    }\r\n    //here i have handled path variable validation exception\r\n    @ExceptionHandler(ConstraintViolationException.class)\r\n    public ResponseEntity<ErrorResponse> handleConstraintViolation(ConstraintViolationException ex, HttpServletRequest request) {\r\n        Map<String, String> errors = new HashMap<>();\r\n        ex.getConstraintViolations().forEach(violation -> {\r\n            String propertyPath = violation.getPropertyPath().toString();\r\n            String paramName = propertyPath.contains(\".\")\r\n                    ? propertyPath.substring(propertyPath.lastIndexOf('.') + 1)\r\n                    : propertyPath;\r\n\r\n            errors.put(paramName, violation.getMessage());\r\n        });\r\n\r\n        ErrorResponse errorResponse = new ErrorResponse(\r\n                HttpStatus.BAD_REQUEST.value(),\r\n                \"INVALID_PATH_VARIABLE\",\r\n                \"One or more path variables are invalid\",\r\n                request.getRequestURI(),\r\n                errors\r\n        );\r\n\r\n        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);\r\n    }\r\n\r\n    //fallback handler for all unexpected Exception\r\n    @ExceptionHandler(Exception.class)\r\n    public ResponseEntity<ErrorResponse> handleUnexpectedException(Exception ex, HttpServletRequest req){\r\n        log.error(\"Unhandled internal error at path: {}\", req.getRequestURI(), ex);\r\n        ErrorResponse error = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), \"UNEXPECTED_Error\", \"An unexpected error occurred. Please contact support if the issue persists\", req.getRequestURI());\r\n        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java b/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java
+--- a/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java	(revision 8644654bc0b4b80e958d53a282259042ee7859d4)
++++ b/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java	(date 1791112922311)
+@@ -30,6 +30,21 @@
+         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "USER_NOT_FOUND", ex.getMessage(), req.getRequestURI());
+         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+     }
++    // these methods handles errors of MoveValidator
++   @ExceptionHandler(InvalidMoveException.class)
++    public ResponseEntity<ErrorResponse> handleInvalidMoveException(InvalidMoveException ex, HttpServletRequest request) {
++        ErrorResponse error = new ErrorResponse(
++                HttpStatus.BAD_REQUEST.value(), "INVALID_MOVE", ex.getMessage(), request.getRequestURI());
++        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
++    }
++
++    @ExceptionHandler(NotYourTurnException.class)
++    public ResponseEntity<ErrorResponse> handleNotYourTurnException(NotYourTurnException ex, HttpServletRequest request) {
++        ErrorResponse error = new ErrorResponse(
++                HttpStatus.FORBIDDEN.value(), "NOT_YOUR_TURN", ex.getMessage(), request.getRequestURI());
++        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
++    }
++
+     //here i have handled dto level validation
+     @ExceptionHandler(MethodArgumentNotValidException.class)
+     public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest req){

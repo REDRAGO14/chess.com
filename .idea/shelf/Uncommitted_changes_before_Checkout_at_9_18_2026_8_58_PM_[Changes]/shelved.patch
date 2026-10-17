@@ -1,0 +1,91 @@
+Index: src/main/java/com/game/chess/Controller/MoveController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.game.chess.Controller;\r\n\r\nimport com.game.chess.DTO.MoveRequest;\r\nimport com.game.chess.DTO.MoveResponse;\r\nimport com.game.chess.Service.MoveService;\r\nimport jakarta.validation.Valid;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.dao.DataIntegrityViolationException;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.List;\r\n\r\n@RestController\r\n@RequestMapping(\"/api/moves\")\r\npublic class MoveController {\r\n\r\n    @Autowired\r\n    private MoveService moveService;\r\n\r\n    @PostMapping(\"\")\r\n    public ResponseEntity<?> createMove(@Valid @RequestBody MoveRequest request) {\r\n        try {\r\n            MoveResponse response = moveService.createMove(request);\r\n            return new ResponseEntity<>(response, HttpStatus.CREATED);\r\n        } catch (DataIntegrityViolationException e) {\r\n\r\n            return ResponseEntity.status(HttpStatus.CONFLICT)\r\n                    .body(\"Move number conflict — please retry.\");\r\n        }\r\n    }\r\n\r\n    @GetMapping(\"/game/{gameId}\")\r\n    public ResponseEntity<List<MoveResponse>> getMovesForGame(@PathVariable Long gameId) {\r\n        return ResponseEntity.ok(moveService.getMovesForGame(gameId));\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/game/chess/Controller/MoveController.java b/src/main/java/com/game/chess/Controller/MoveController.java
+--- a/src/main/java/com/game/chess/Controller/MoveController.java	(revision 3f6f3d53414558e2eae42b321990b1f175a39066)
++++ b/src/main/java/com/game/chess/Controller/MoveController.java	(date 1789754223236)
+@@ -4,7 +4,7 @@
+ import com.game.chess.DTO.MoveResponse;
+ import com.game.chess.Service.MoveService;
+ import jakarta.validation.Valid;
+-import org.springframework.beans.factory.annotation.Autowired;
++import lombok.RequiredArgsConstructor;
+ import org.springframework.dao.DataIntegrityViolationException;
+ import org.springframework.http.HttpStatus;
+ import org.springframework.http.ResponseEntity;
+@@ -14,10 +14,10 @@
+ 
+ @RestController
+ @RequestMapping("/api/moves")
++@RequiredArgsConstructor
+ public class MoveController {
+ 
+-    @Autowired
+-    private MoveService moveService;
++    private final MoveService moveService;
+ 
+     @PostMapping("")
+     public ResponseEntity<?> createMove(@Valid @RequestBody MoveRequest request) {
+Index: src/main/java/com/game/chess/Service/MoveService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.game.chess.Service;\r\n\r\nimport com.game.chess.DTO.MoveRequest;\r\nimport com.game.chess.DTO.MoveResponse;\r\nimport com.game.chess.Model.Game;\r\nimport com.game.chess.Model.Move;\r\nimport com.game.chess.Model.User;\r\nimport com.game.chess.Repository.GameRepository;\r\nimport com.game.chess.Repository.MoveRepository;\r\nimport com.game.chess.Repository.UserRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.stereotype.Service;\r\nimport org.springframework.transaction.annotation.Transactional;\r\nimport org.springframework.web.server.ResponseStatusException;\r\n\r\nimport java.util.List;\r\nimport java.util.stream.Collectors;\r\n\r\n@Service\r\npublic class MoveService {\r\n\r\n    @Autowired\r\n    private MoveRepository moveRepository;\r\n\r\n    @Autowired\r\n    private UserRepository userRepository;\r\n    @Autowired\r\n    private GameRepository gameRepository;\r\n\r\n    @Transactional\r\n    public MoveResponse createMove(MoveRequest request) {\r\n        User player = userRepository.findById(request.getPlayerId())\r\n                .orElseThrow(() -> new ResponseStatusException(\r\n                        HttpStatus.NOT_FOUND, \"Player not found: \" + request.getPlayerId()));\r\n\r\n        Game game = gameRepository.findById(request.getGameId())\r\n                .orElseThrow(() -> new ResponseStatusException(\r\n                        HttpStatus.NOT_FOUND, \"Game not found: \" + request.getGameId()));\r\n\r\n        int nextMoveNumber = moveRepository.countByGameId(request.getGameId()) + 1;\r\n\r\n        Move move = new Move();\r\n        move.setGame(game);\r\n        move.setPlayer(player);\r\n        move.setMoveNumber(nextMoveNumber);\r\n        move.setFromSquare(request.getFromSquare());\r\n        move.setToSquare(request.getToSquare());\r\n        move.setPieceMoved(request.getPieceMoved());\r\n        move.setCapturedPiece(request.getCapturedPiece());\r\n\r\n        Move saved = moveRepository.save(move);\r\n        return toResponse(saved);\r\n    }\r\n\r\n    public List<MoveResponse> getMovesForGame(Long gameId) {\r\n        return moveRepository.findByGameIdOrderByMoveNumberAsc(gameId)\r\n                .stream()\r\n                .map(this::toResponse)\r\n                .collect(Collectors.toList());\r\n    }\r\n\r\n    private MoveResponse toResponse(Move move) {\r\n        return new MoveResponse(\r\n                move.getId(),\r\n                move.getGame().getId(),\r\n                move.getPlayer().getId(),\r\n                move.getPlayer().getUserName(),\r\n                move.getMoveNumber(),\r\n                move.getFromSquare(),\r\n                move.getToSquare(),\r\n                move.getPieceMoved(),\r\n                move.getCapturedPiece(),\r\n                move.getCreatedAt()\r\n        );\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/game/chess/Service/MoveService.java b/src/main/java/com/game/chess/Service/MoveService.java
+--- a/src/main/java/com/game/chess/Service/MoveService.java	(revision 3f6f3d53414558e2eae42b321990b1f175a39066)
++++ b/src/main/java/com/game/chess/Service/MoveService.java	(date 1789754284880)
+@@ -8,7 +8,7 @@
+ import com.game.chess.Repository.GameRepository;
+ import com.game.chess.Repository.MoveRepository;
+ import com.game.chess.Repository.UserRepository;
+-import org.springframework.beans.factory.annotation.Autowired;
++import lombok.RequiredArgsConstructor;
+ import org.springframework.http.HttpStatus;
+ import org.springframework.stereotype.Service;
+ import org.springframework.transaction.annotation.Transactional;
+@@ -18,15 +18,12 @@
+ import java.util.stream.Collectors;
+ 
+ @Service
++@RequiredArgsConstructor
+ public class MoveService {
+ 
+-    @Autowired
+-    private MoveRepository moveRepository;
+-
+-    @Autowired
+-    private UserRepository userRepository;
+-    @Autowired
+-    private GameRepository gameRepository;
++    private final MoveRepository moveRepository;
++    private final UserRepository userRepository;
++    private final GameRepository gameRepository;
+ 
+     @Transactional
+     public MoveResponse createMove(MoveRequest request) {
+@@ -53,6 +50,8 @@
+         return toResponse(saved);
+     }
+ 
++
++
+     public List<MoveResponse> getMovesForGame(Long gameId) {
+         return moveRepository.findByGameIdOrderByMoveNumberAsc(gameId)
+                 .stream()
+@@ -60,6 +59,10 @@
+                 .collect(Collectors.toList());
+     }
+ 
++
++
++
++
+     private MoveResponse toResponse(Move move) {
+         return new MoveResponse(
+                 move.getId(),

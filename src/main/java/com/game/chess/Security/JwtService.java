@@ -1,5 +1,6 @@
 package com.game.chess.Security;
 
+import com.game.chess.Model.AuthRequest;
 import com.game.chess.Model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -14,18 +15,15 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private final SecretKey secretKey;
+    private final String SECRET = "eX9+Z1P2qLmN4vRw8kY3tA6sD0fG1hJ5kL7mNpQrStUvWxYz0aBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUvWw==";
+    private final SecretKey secretKey = Keys.hmacShaKeyFor(SECRET.getBytes());
+
 
     private final long expirationTime = 24 * 60 * 60 * 1000;
 
-    public JwtService(@Value("${jwt.secret}") String secret) {
 
-        this.secretKey = Keys.hmacShaKeyFor(
-                secret.getBytes(StandardCharsets.UTF_8)
-        );
-    }
 
-    public String generateToken(User user) {
+    public String generateToken(AuthRequest user) {
 
         Date now = new Date();
 
@@ -34,7 +32,7 @@ public class JwtService {
         );
 
         return Jwts.builder()
-                .subject(user.getEmail())
+                .subject(user.username())
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(secretKey)
@@ -44,29 +42,21 @@ public class JwtService {
 
     public String extractEmail(String token) {
 
+        Claims claims = getClaims(token);
+
+        return claims.getSubject();
+    }
+
+    private Claims getClaims(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-
-        return claims.getSubject();
+        return claims;
     }
 
     public boolean isTokenValid(String token) {
-
-        try {
-
-            Jwts.parser()
-                    .verifyWith(secretKey)
-                    .build()
-                    .parseSignedClaims(token);
-
-            return true;
-
-        } catch (Exception e) {
-
-            return false;
-        }
+        return getClaims(token).getExpiration().before(new Date(System.currentTimeMillis()));
     }
 }

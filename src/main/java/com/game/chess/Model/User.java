@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,25 +17,20 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@Entity
-@Table(name = "users")
+@Entity()
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String userName;
-
     private String password;
-
     private String email;
 
+    private String role = "USER";
     @CreationTimestamp
     private LocalDateTime createdAt;
-
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private  LocalDateTime updatedAt;
 
     public String getUserName() {
         return userName;
@@ -44,9 +38,12 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(
+                new org.springframework.security.core.authority.SimpleGrantedAuthority(
+                        "ROLE_" + role
+                )
+        );
     }
-
     @Override
     public String getUsername() {
         return userName;
@@ -54,21 +51,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return UserDetails.super.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return UserDetails.super.isAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return UserDetails.super.isCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return UserDetails.super.isEnabled();
     }
 }
