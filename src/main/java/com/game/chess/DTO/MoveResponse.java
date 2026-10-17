@@ -1,23 +1,29 @@
 package com.game.chess.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import com.game.chess.Model.GameMove;
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class MoveResponse {
-    private Long id;
-    private Long gameId;
-    private Long playerId;
-    private String playerUsername;
-    private Integer moveNumber;
-    private String fromSquare;
-    private String toSquare;
-    private String pieceMoved;
-    private String capturedPiece;
-    private LocalDateTime createdAt;
+public record MoveResponse(
+        Long id,
+        Long playerId,
+        int moveNumber,
+        String san,
+        String fromSquare,
+        String toSquare,
+        LocalDateTime createdAt
+) {
+    /**
+     * Maps a raw GameMove database entity into a clean MoveResponse DTO.
+     */
+    public static MoveResponse from(GameMove move) {
+        return new MoveResponse(
+                move.getId(),
+                move.getPlayer().getId(),
+                move.getMoveNumber(),
+                move.getSan(),
+                move.getFromSquare(),
+                move.getToSquare(),
+                move.getCreatedAt()
+        );
+    }
 }

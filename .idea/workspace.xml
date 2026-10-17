@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="finished week 3 day 2">
+    <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="added MoveHistoryService which consist toSan method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/GameMove.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Repository/MoveRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Repository/MoveRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/MoveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/MoveService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +183,23 @@
       <option name="project" value="LOCAL" />
       <updated>1792176376256</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="rename the move model to game move to avoid ambiguity">
+      <option name="closed" value="true" />
+      <created>1792253395014</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1792253395014</updated>
+    </task>
+    <task id="LOCAL-00013" summary="added MoveHistoryService which consist toSan method">
+      <option name="closed" value="true" />
+      <created>1792254903442</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1792254903442</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,6 +221,8 @@
     <MESSAGE value="Add AuthController and AuthService" />
     <MESSAGE value="Add Jwt Authentication and Jwt service" />
     <MESSAGE value="Game service and Game status" />
-    <option name="LAST_COMMIT_MESSAGE" value="Game service and Game status" />
+    <MESSAGE value="rename the move model to game move to avoid ambiguity" />
+    <MESSAGE value="added MoveHistoryService which consist toSan method" />
+    <option name="LAST_COMMIT_MESSAGE" value="added MoveHistoryService which consist toSan method" />
   </component>
 </project>
