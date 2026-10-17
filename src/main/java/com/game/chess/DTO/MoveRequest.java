@@ -22,8 +22,7 @@ public class MoveRequest {
     @Pattern(regexp = "^[a-h][1-8]$", message = "toSquare must look like 'e4'")
     private String toSquare;
 
-    @NotBlank(message = "pieceMoved is required")
-    private String pieceMoved;
+    @Pattern(regexp = "^[QRBNqrbn]$", message = "promotion must be Q,R,B or N")
 
-    private String capturedPiece;
+    private String promotion;
 }

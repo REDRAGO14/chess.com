@@ -22,7 +22,11 @@ public class GameMove {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "player_id")        // foreign key to users
     private User player;
+    @Column(name = "piece_moved", length = 20)
+    private String pieceMoved; // Required by Biruk's service
 
+    @Column(name = "captured_piece", length = 20)
+    private String capturedPiece; // Required by Biruk's service
     private int moveNumber;                // 1, 2, 3 ... (ply count)
     private String san;                    // "e4", "Nf3", "Qxf7#"
     private String fromSquare;             // "e2"

@@ -5,11 +5,15 @@ import java.time.LocalDateTime;
 
 public record MoveResponse(
         Long id,
+        Long gameId,
         Long playerId,
+        String userName,
         int moveNumber,
-        String san,
         String fromSquare,
         String toSquare,
+        String san,           // Human-readable notation[cite: 2]
+        String pieceMoved,
+        String capturedPiece,
         LocalDateTime createdAt
 ) {
     /**
@@ -18,11 +22,15 @@ public record MoveResponse(
     public static MoveResponse from(GameMove move) {
         return new MoveResponse(
                 move.getId(),
+                move.getGame().getId(),
                 move.getPlayer().getId(),
+                move.getPlayer().getUserName(),
                 move.getMoveNumber(),
-                move.getSan(),
                 move.getFromSquare(),
                 move.getToSquare(),
+                move.getSan(),
+                move.getPieceMoved(),
+                move.getCapturedPiece(),
                 move.getCreatedAt()
         );
     }
