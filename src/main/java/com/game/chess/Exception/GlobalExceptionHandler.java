@@ -7,10 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
@@ -92,6 +94,45 @@ public class GlobalExceptionHandler {
                 req.getRequestURI()
         );
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    // --- WEEK 4: Wallet, Escrow, Payments & Upload Exceptions ---
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ResponseEntity<ErrorResponse> handleInsufficientBalance(InsufficientBalanceException ex, HttpServletRequest req) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "INSUFFICIENT_BALANCE", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(WalletNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleWalletNotFound(WalletNotFoundException ex, HttpServletRequest req) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "WALLET_NOT_FOUND", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidAmountException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidAmount(InvalidAmountException ex, HttpServletRequest req) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "INVALID_AMOUNT", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ObjectOptimisticLockingFailureException.class, LockConflictException.class})
+    public ResponseEntity<ErrorResponse> handleLockConflict(Exception ex, HttpServletRequest req) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), "WALLET_BUSY", "Wallet is busy, please retry", req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler({FileSecurityException.class, MaxUploadSizeExceededException.class})
+    public ResponseEntity<ErrorResponse> handleFileSecurity(Exception ex, HttpServletRequest req) {
+        String message = ex instanceof MaxUploadSizeExceededException ? "File size exceeds the 5MB limit" : ex.getMessage();
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "FILE_REJECTED", message, req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PaymentGatewayException.class)
+    public ResponseEntity<ErrorResponse> handlePaymentGateway(PaymentGatewayException ex, HttpServletRequest req) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_GATEWAY.value(), "PAYMENT_GATEWAY_ERROR", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.BAD_GATEWAY);
     }
 
     //here i have handled path variable validation exception
