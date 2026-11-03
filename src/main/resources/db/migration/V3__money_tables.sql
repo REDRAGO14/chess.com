@@ -5,7 +5,7 @@ CREATE TABLE wallets (
                          version     BIGINT NOT NULL DEFAULT 0,
                          created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
                          updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                         CONSTRAINT fk_wallet_user FOREIGN KEY (user_id) REFERENCES users(id),
+                         CONSTRAINT fk_wallet_user FOREIGN KEY (user_id) REFERENCES user(id),
                          CONSTRAINT chk_wallet_balance CHECK (balance >= 0)
 );
 
@@ -30,7 +30,7 @@ CREATE TABLE match_escrow (
                               created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
                               CONSTRAINT uq_escrow_game_user UNIQUE (game_id, user_id),
                               CONSTRAINT fk_escrow_game FOREIGN KEY (game_id) REFERENCES games(id),
-                              CONSTRAINT fk_escrow_user FOREIGN KEY (user_id) REFERENCES users(id)
+                              CONSTRAINT fk_escrow_user FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 CREATE TABLE payment_transactions (
@@ -44,7 +44,7 @@ CREATE TABLE payment_transactions (
                                       version      BIGINT NOT NULL DEFAULT 0,
                                       created_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
                                       updated_at   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                                      CONSTRAINT fk_pay_user FOREIGN KEY (user_id) REFERENCES users(id)
+                                      CONSTRAINT fk_pay_user FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 CREATE TABLE manual_deposits (
@@ -59,5 +59,5 @@ CREATE TABLE manual_deposits (
                                  version        BIGINT NOT NULL DEFAULT 0,
                                  created_at     DATETIME DEFAULT CURRENT_TIMESTAMP,
                                  reviewed_at    DATETIME NULL,
-                                 CONSTRAINT fk_dep_user FOREIGN KEY (user_id) REFERENCES users(id)
+                                 CONSTRAINT fk_dep_user FOREIGN KEY (user_id) REFERENCES user(id)
 );
