@@ -18,9 +18,12 @@ import com.game.chess.Model.GameStatus;
 import com.game.chess.Model.User;
 import com.game.chess.Repository.GameRepository;
 import com.game.chess.Repository.UserRepository;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -34,7 +37,15 @@ public class GameService {
 @Transactional
     public GameResponse createGame(CreateGameRequest request) {
         User creator = findUserOrThrow(request.getUserId());
+    // Check if the user is already in a WAITING or ACTIVE game
+    boolean isInGame = gameRepository.existsActiveGameForUser(
+            creator.getId(),
+            List.of(GameStatus.WAITING, GameStatus.READY,GameStatus.ACTIVE)
+    );
 
+    if (isInGame) {
+        throw new InvalidGameStateException("User is already in an active or waiting game.");
+    }
         Game game = new Game();
         game.setWhiteplayer(creator);
         game.setStatus(GameStatus.WAITING);
@@ -58,7 +69,15 @@ public class GameService {
         }
 
         User joiner = findUserOrThrow(request.getUserId());
+        // Check if the user is already in a WAITING or ACTIVE game
+        boolean isInGame = gameRepository.existsActiveGameForUser(
+                joiner.getId(),
+                List.of(GameStatus.WAITING, GameStatus.READY, GameStatus.ACTIVE)
+        );
 
+        if (isInGame) {
+            throw new InvalidGameStateException("User is already in an active or waiting game.");
+        }
         game.setBlackplayer(joiner);
         game.setStatus(GameStatus.READY);
 

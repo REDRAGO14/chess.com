@@ -10,7 +10,7 @@ import com.game.chess.Exception.NotYourTurnException;
 import com.game.chess.Exception.UserNotFound;
 import com.game.chess.Model.Game;
 import com.game.chess.Model.GameStatus;
-import com.game.chess.Model.Move;
+import com.game.chess.Model.GameMove;
 import com.game.chess.Model.User;
 import com.game.chess.Repository.GameRepository;
 import com.game.chess.Repository.MoveRepository;
@@ -35,6 +35,7 @@ public class MoveService {
     private final MoveRepository moveRepository;
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
+    private final MoveHistoryService moveHistoryService;
 
 
     @Transactional
@@ -80,7 +81,8 @@ public class MoveService {
             throw new InvalidMoveException("Illegal move: " + from + " to " + to);
         }
 
-
+        // 1. COMPUTE SAN NOTATION BEFORE THE MOVE HAPPENS
+        String sanNotation = moveHistoryService.toSan(game.getFen(), chessMove); // <--- Added this line
         Piece captured = board.getPiece(to);
         boolean pawnChangedFile = piece.getPieceType() == PieceType.PAWN && from.getFile() != to.getFile();
         if (captured == Piece.NONE && pawnChangedFile) {
@@ -98,17 +100,18 @@ public class MoveService {
         }
 
 
-        Move move = new Move();
+        GameMove move = new GameMove();
         move.setGame(game);
         move.setPlayer(player);
         move.setMoveNumber(moveRepository.countByGameId(game.getId()) + 1);
         move.setFromSquare(request.getFromSquare());
         move.setToSquare(request.getToSquare());
+        move.setSan(sanNotation); // <--- Saved your human-readable notation here!
         move.setPieceMoved(piece.name());
         move.setCapturedPiece(captured == Piece.NONE ? null : captured.name());
 
         gameRepository.save(game);
-        Move saved = moveRepository.save(move);
+        GameMove saved = moveRepository.save(move);
         return toResponse(saved);
     }
 
@@ -151,7 +154,7 @@ public class MoveService {
         return new com.github.bhlangonijr.chesslib.move.Move(from, to);
     }
 
-    private MoveResponse toResponse(Move move) {
+    private MoveResponse toResponse(GameMove move) {
         return new MoveResponse(
                 move.getId(),
                 move.getGame().getId(),
@@ -160,6 +163,7 @@ public class MoveService {
                 move.getMoveNumber(),
                 move.getFromSquare(),
                 move.getToSquare(),
+                move.getSan(),
                 move.getPieceMoved(),
                 move.getCapturedPiece(),
                 move.getCreatedAt()
