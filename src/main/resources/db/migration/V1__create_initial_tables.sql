@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE user (
                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
                        user_name VARCHAR(255),
                        password VARCHAR(255),
@@ -27,7 +27,7 @@ CREATE TABLE moves (
                            FOREIGN KEY (game_id) REFERENCES game(id),
 
                        CONSTRAINT fk_move_player
-                           FOREIGN KEY (player_id) REFERENCES users(id),
+                           FOREIGN KEY (player_id) REFERENCES user(id),
 
                        CONSTRAINT uk_game_move_number
                            UNIQUE (game_id, move_number)

@@ -42,6 +42,13 @@ public class Game {
     @Column(nullable = false, length = 100)
     private String fen = ChessConstants.STRING_FEN;
 
+    // Remaining time for each player in seconds (e.g., 300 seconds = 5 minutes)
+    private Long whiteTimeRemaining = 300L;
+    private Long blackTimeRemaining = 300L;
+
+    // Timestamp of when the last move was made or game started
+    private LocalDateTime lastMoveAt;
+
     @CreationTimestamp
     @Column(name = "created_At", updatable = false)
     private LocalDateTime createdAt;
