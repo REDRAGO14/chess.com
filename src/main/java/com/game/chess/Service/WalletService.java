@@ -42,15 +42,23 @@ public class WalletService {
     @Transactional
     public Wallet credit(Long userId, BigDecimal amount, String reference) {
         checkAmount(amount);
-        Wallet wallet = getOrCreateWallet(userId);
 
-        if (auditRepository.existsByTypeAndReference(TransactionType.CREDIT, reference)) {
 
+        getOrCreateWallet(userId);
+
+
+        Wallet wallet = walletRepository.findByUserIdForUpdate(userId)
+                .orElseThrow(() ->
+                        new WalletNotFoundException("No wallet for user " + userId));
+
+
+        if (auditRepository.existsByTypeAndReference(
+                TransactionType.CREDIT, reference)) {
             return wallet;
         }
+
         return applyChange(wallet, amount, TransactionType.CREDIT, reference);
     }
-
     @Transactional
     public Wallet debit(Long userId, BigDecimal amount, TransactionType type, String reference) {
         checkAmount(amount);

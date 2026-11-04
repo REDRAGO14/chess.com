@@ -5,26 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="fully working code till week 3 day 4 task">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Config/WebSocketConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Controller/GameWebSocketController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Listener/WebSocketEventListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/WebSocketAuthInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/chess-test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Controller/PaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Controller/PaymentWebhookController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/DepositRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/PaymentInitResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/PaymentStatusResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Exception/PaymentNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/PaymentStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/PaymentTransaction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Repository/PaymentTransactionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/ChapaPaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/PaymentSettlementService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/ChessApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/ChessApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Repository/WalletRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Repository/WalletRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/MoveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/MoveService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/WalletService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/WalletService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__create_initial_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V1__create_initial_tables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V2__game_lifecycle.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V2__game_lifecycle.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Model/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/GlobalExceptionHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Security/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/MoveService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/Service/MoveService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/migration/V1__create_initial_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/migration/V1__create_initial_tables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/migration/V2__game_lifecycle.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/migration/V2__game_lifecycle.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,8 +35,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Exception" />
         <option value="Class" />
       </list>
@@ -91,7 +92,7 @@
     "Spring Boot.ChessApplication.executor": "Run",
     "Spring Boot.Unnamed.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "Redragon",
+    "git-widget-placeholder": "Biruk",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm"
   }
@@ -102,7 +103,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.Unnamed">
+  <component name="RunManager">
     <configuration name="MoveServiceTest.illegalPawnJumpIsRejected" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="chess" />
       <extension name="coverage">
