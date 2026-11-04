@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multiplayer Chess Real-Time Test Harness</title>
+    <!-- SockJS and STOMP CDNs -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1e1e24; color: #f4f4f9; margin: 20px; }
+        .layout { display: flex; gap: 20px; flex-wrap: wrap; }
+        .card { background: #2b2b36; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); flex: 1; min-width: 320px; }
+        h2, h3 { margin-top: 0; color: #4da6ff; }
+
+        /* Chess Board Styles */
+        #board { display: grid; grid-template-columns: repeat(8, 50px); grid-template-rows: repeat(8, 50px); border: 3px solid #444; width: 400px; height: 400px; margin: 10px 0; }
+        .square { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; user-select: none; }
+        .white-square { background: #eeeed2; color: #000; }
+        .black-square { background: #769656; color: #000; }
+        .selected { background: #baca44 !important; }
+
+        /* Controls & Form Inputs */
+        input, button { padding: 8px 12px; margin: 4px 0; font-size: 14px; border-radius: 4px; border: 1px solid #555; }
+        input { background: #1e1e24; color: #fff; width: 100%; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0056b3; }
+        button.danger { background: #dc3545; }
+        button.danger:hover { background: #a71d2a; }
+
+        /* Timers */
+        .timers { display: flex; justify-content: space-between; margin: 15px 0; gap: 10px; }
+        .timer-box { background: #1e1e24; padding: 10px; border-radius: 6px; flex: 1; text-align: center; border: 1px solid #444; }
+        .timer-box.active { border-color: #4da6ff; background: #253342; }
+        .time-val { font-size: 22px; font-weight: bold; font-family: monospace; color: #00ffcc; }
+
+        /* Event Log */
+        #log { background: #121216; color: #00ff66; padding: 12px; border-radius: 6px; height: 180px; overflow-y: auto; font-family: monospace; font-size: 12px; border: 1px solid #333; }
+    </style>
+</head>
+<body>
+
+<h2>♟️ Multiplayer Chess Real-Time Test Harness</h2>
+
+<div class="layout">
+    <!-- Panel 1: Connection & Game Settings -->
+    <div class="card">
+        <h3>1. Session & Auth</h3>
+        <label>JWT Bearer Token:</label>
+        <input type="text" id="token" placeholder="Paste Bearer Token here">
+
+        <div style="display: flex; gap: 10px; margin-top: 5px;">
+            <button onclick="connect()">Connect STOMP</button>
+            <button class="danger" onclick="disconnect()">Disconnect (Simulate Drop)</button>
+        </div>
+        <p>Status: <span id="status" style="color: orange; font-weight: bold;">Disconnected</span></p>
+
+        <hr style="border-color: #444; margin: 15px 0;">
+
+        <h3>2. Game Session</h3>
+        <div style="display: flex; gap: 10px;">
+            <div>
+                <label>Game ID:</label>
+                <input type="number" id="gameId" value="1">
+            </div>
+            <div>
+                <label>Player ID:</label>
+                <input type="number" id="playerId" value="1">
+            </div>
+        </div>
+        <button onclick="subscribeToGame()">Subscribe to Game Topic</button>
+    </div>
+
+    <!-- Panel 2: Interactive Chess Board & Timers -->
+    <div class="card">
+        <h3>3. Live Board View</h3>
+
+        <div class="timers">
+            <div class="timer-box" id="whiteTimerBox">
+                <div>⚪ White Time</div>
+                <div class="time-val" id="whiteTime">05:00</div>
+            </div>
+            <div class="timer-box" id="blackTimerBox">
+                <div>⚫ Black Time</div>
+                <div class="time-val" id="blackTime">05:00</div>
+            </div>
+        </div>
+
+        <div id="board"></div>
+
+        <p>Selected Square: <span id="selectedSquare" style="color: #00ffcc; font-weight: bold;">None</span></p>
+    </div>
+</div>
+
+<!-- Panel 3: Event Log -->
+<div class="card" style="margin-top: 20px;">
+    <h3>4. System Event & Broadcast Logs</h3>
+    <div id="log"></div>
+</div>
+
+<script>
+    let stompClient = null;
+    let selectedSquareStr = null;
+    let currentFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+    // Unicode Chess Piece Mapping
+    const pieceMap = {
+        'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
+        'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔', 'P': '♙'
+    };
+
+    function log(msg) {
+        const logBox = document.getElementById('log');
+        logBox.innerHTML += `[${new Date().toLocaleTimeString()}] ${msg}<br>`;
+        logBox.scrollTop = logBox.scrollHeight;
+    }
+
+    function formatTime(seconds) {
+        if (!seconds || seconds < 0) seconds = 0;
+        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    function renderBoardFromFen(fen) {
+        currentFen = fen;
+        const boardDiv = document.getElementById('board');
+        boardDiv.innerHTML = '';
+
+        const rows = fen.split(' ')[0].split('/');
+        const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+        for (let r = 0; r < 8; r++) {
+            let fileIdx = 0;
+            for (let charIdx = 0; charIdx < rows[r].length; charIdx++) {
+                const char = rows[r][charIdx];
+
+                if (!isNaN(char)) {
+                    const emptyCount = parseInt(char);
+                    for (let e = 0; e < emptyCount; e++) {
+                        createSquare(r, fileIdx, '', files[fileIdx] + (8 - r));
+                        fileIdx++;
+                    }
+                } else {
+                    createSquare(r, fileIdx, pieceMap[char] || '', files[fileIdx] + (8 - r));
+                    fileIdx++;
+                }
+            }
+        }
+    }
+
+    function createSquare(row, col, pieceChar, squareCoord) {
+        const boardDiv = document.getElementById('board');
+        const square = document.createElement('div');
+        const isWhiteSquare = (row + col) % 2 === 0;
+
+        square.className = `square ${isWhiteSquare ? 'white-square' : 'black-square'}`;
+        square.innerText = pieceChar;
+        square.dataset.coord = squareCoord;
+
+        square.onclick = function() {
+            if (!selectedSquareStr) {
+                selectedSquareStr = squareCoord;
+                square.classList.add('selected');
+                document.getElementById('selectedSquare').innerText = squareCoord + " (Select target square)";
+            } else {
+                const from = selectedSquareStr;
+                const to = squareCoord;
+                selectedSquareStr = null;
+                document.getElementById('selectedSquare').innerText = 'None';
+                document.querySelectorAll('.square').forEach(s => s.classList.remove('selected'));
+
+                sendMove(from, to);
+            }
+        };
+
+        boardDiv.appendChild(square);
+    }
+
+    function connect() {
+        const token = document.getElementById('token').value.trim();
+        if (!token) {
+            alert("Please enter a valid JWT token!");
+            return;
+        }
+
+        const socket = new SockJS('http://localhost:8888/ws-chess');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({ 'Authorization': 'Bearer ' + token }, function (frame) {
+            document.getElementById('status').innerText = 'Connected ✅';
+            document.getElementById('status').style.color = '#00ffcc';
+            log('STOMP Connected: ' + frame);
+        }, function (error) {
+            document.getElementById('status').innerText = 'Disconnected / Failed ❌';
+            document.getElementById('status').style.color = '#ff4d4d';
+            log('STOMP Error: ' + error);
+        });
+    }
+
+    function disconnect() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+            document.getElementById('status').innerText = 'Disconnected 🔌';
+            document.getElementById('status').style.color = 'orange';
+            log('Disconnected manually.');
+        }
+    }
+
+    function subscribeToGame() {
+        const gameId = document.getElementById('gameId').value;
+        const destination = `/topic/game/${gameId}`;
+
+        if (!stompClient) {
+            alert("Please connect to STOMP first!");
+            return;
+        }
+
+        stompClient.subscribe(destination, function (sdkOutput) {
+            try {
+                const data = JSON.parse(sdkOutput.body);
+                log(`📥 Broadcast Received: Move #${data.moveNumber} (${data.fromSquare} -> ${data.toSquare})`);
+
+                // Update board state if FEN is included in the payload
+                if (data.fen) {
+                    renderBoardFromFen(data.fen);
+                }
+
+                // Update clocks if present
+                if (data.whiteTimeRemaining !== undefined) {
+                    document.getElementById('whiteTime').innerText = formatTime(data.whiteTimeRemaining);
+                }
+                if (data.blackTimeRemaining !== undefined) {
+                    document.getElementById('blackTime').innerText = formatTime(data.blackTimeRemaining);
+                }
+
+            } catch (e) {
+                log(`📥 Broadcast Received (Raw Text): ${sdkOutput.body}`);
+            }
+        });
+
+        log(`Subscribed to ${destination}`);
+    }
+
+    function sendMove(from, to) {
+        const gameId = document.getElementById('gameId').value;
+        const playerId = document.getElementById('playerId').value;
+
+        const payload = {
+            gameId: parseInt(gameId),
+            playerId: parseInt(playerId),
+            fromSquare: from,
+            toSquare: to
+        };
+
+        stompClient.send(`/app/game/${gameId}/move`, {}, JSON.stringify(payload));
+        log(`📤 Sent move attempt: ${from} -> ${to}`);
+    }
+
+    // Initialize board on start
+    renderBoardFromFen(currentFen);
+</script>
+
+</body>
+</html>
