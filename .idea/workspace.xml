@@ -4,13 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="chapa integration">
+    <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="fully working code till week 3 day 4 task">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Config/OpenApiConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/EscrowStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/StakeRetryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/game/chess/WalletConcurrencyTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/ChessApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/ChessApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/ChapaPaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/ChapaPaymentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V3__money_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/AuthController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/MoveResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/GlobalExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Repository/GameRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Repository/MoveRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Security/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/GameService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/MoveService.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +32,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Exception" />
         <option value="Class" />
       </list>
@@ -30,7 +42,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Biruk" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,7 +56,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/REDRAGO14/chess.com.git&quot;,
-    &quot;accountId&quot;: &quot;da648e9d-c97d-47fb-a149-fce25e703a50&quot;
+    &quot;accountId&quot;: &quot;e76edeee-1b9a-4663-9e3f-b839f5255abe&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -64,24 +76,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.ChessApplicationTests.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MoveServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MoveServiceTest.illegalPawnJumpIsRejected.executor&quot;: &quot;Debug&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ChessApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Biruk&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.ChessApplicationTests.executor": "Run",
+    "JUnit.MoveServiceTest.executor": "Run",
+    "JUnit.MoveServiceTest.illegalPawnJumpIsRejected.executor": "Debug",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.ChessApplication.executor": "Run",
+    "Spring Boot.Unnamed.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "Merging master",
+    "kotlin-language-version-configured": "true",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.game.chess" />
@@ -129,6 +141,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MoveServiceTest.illegalPawnJumpIsRejected" />
+        <item itemvalue="JUnit.MoveServiceTest.illegalPawnJumpIsRejected" />
+        <item itemvalue="JUnit.MoveServiceTest.illegalPawnJumpIsRejected" />
         <item itemvalue="JUnit.MoveServiceTest.illegalPawnJumpIsRejected" />
         <item itemvalue="JUnit.MoveServiceTest.illegalPawnJumpIsRejected" />
       </list>
@@ -254,23 +269,15 @@
       <option name="project" value="LOCAL" />
       <updated>1792264379437</updated>
     </task>
-    <task id="LOCAL-00015" summary="chapa integration">
+    <task id="LOCAL-00015" summary="match escrow">
       <option name="closed" value="true" />
-      <created>1793813065098</created>
+      <created>1793730562197</created>
       <option name="number" value="00015" />
       <option name="presentableId" value="LOCAL-00015" />
       <option name="project" value="LOCAL" />
-      <updated>1793813065098</updated>
+      <updated>1793730562197</updated>
     </task>
-    <task id="LOCAL-00016" summary="chapa integration">
-      <option name="closed" value="true" />
-      <created>1793813107171</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1793813107171</updated>
-    </task>
-    <option name="localTasksCounter" value="17" />
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,18 +302,7 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/Biruk'&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/com/game/chess/Service/MoveService.java" />
     <MESSAGE value="code that pass all test case" />
     <MESSAGE value="fully working code till week 3 day 4 task" />
-    <MESSAGE value="chapa integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="chapa integration" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/game/chess/Model/User.java</url>
-          <line>51</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="match escrow" />
+    <option name="LAST_COMMIT_MESSAGE" value="match escrow" />
   </component>
 </project>
