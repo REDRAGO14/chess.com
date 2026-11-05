@@ -119,12 +119,14 @@ public class ChapaPaymentService {
             paymentRepository.save(tx);
             return new PaymentInitResponse(txRef, checkoutUrl);
         } catch (RestClientException | IllegalStateException e) {
+            e.printStackTrace();
+
             tx.setStatus(PaymentStatus.FAILED);
             paymentRepository.save(tx);
+
             throw new PaymentGatewayException("Could not start the payment with Chapa");
         }
     }
-
 
 
     public PaymentStatusResponse confirmPayment(String txRef, Long requesterId) {
@@ -150,7 +152,7 @@ public class ChapaPaymentService {
         return PaymentStatusResponse.from(fresh);
     }
 
-    @SuppressWarnings("unchecked")
+
     Map<String, Object> fetchVerification(String txRef) {
         try {
             Map<String, Object> response = restClient.get()
@@ -178,7 +180,7 @@ public class ChapaPaymentService {
         catch (NumberFormatException e) { return null; }
     }
 
-    @SuppressWarnings("unchecked")
+
     private String extractCheckoutUrl(Map<String, Object> response) {
         Object data = response == null ? null : response.get("data");
         Object url = data instanceof Map ? ((Map<String, Object>) data).get("checkout_url") : null;

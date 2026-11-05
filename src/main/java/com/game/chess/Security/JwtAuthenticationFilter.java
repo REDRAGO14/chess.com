@@ -34,9 +34,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain)
             throws ServletException, IOException {
+
         String authorizationHeader =
                 request.getHeader("Authorization");
-
 
         if (authorizationHeader == null ||
                 !authorizationHeader.startsWith("Bearer ")) {
@@ -45,56 +45,42 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-
         String token = authorizationHeader.substring(7);
 
         try {
 
-
             if (jwtService.isTokenValid(token)) {
 
-                filterChain.doFilter(request, response);
-                return;
-            }
+                String username = jwtService.extractEmail(token);
 
+                if (SecurityContextHolder.getContext()
+                        .getAuthentication() == null) {
 
-            String username = jwtService.extractEmail(token);
+                    User user = userRepository
+                            .findByUserName(username)
+                            .orElse(null);
 
+                    if (user != null) {
 
-            if (SecurityContextHolder
-                    .getContext()
-                    .getAuthentication() == null) {
+                        UsernamePasswordAuthenticationToken authentication =
+                                new UsernamePasswordAuthenticationToken(
+                                        user,
+                                        null,
+                                        user.getAuthorities()
+                                );
 
-                User user = userRepository
-                        .findByUserName(username)
-                        .orElse(null);
+                        authentication.setDetails(
+                                new WebAuthenticationDetailsSource()
+                                        .buildDetails(request)
+                        );
 
-                if (user != null) {
-
-
-                    UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(
-                                    user,
-                                    null,
-                                    user.getAuthorities()
-                            );
-
-
-                    authentication.setDetails(
-                            new WebAuthenticationDetailsSource()
-                                    .buildDetails(request)
-                    );
-
-
-                    SecurityContextHolder
-                            .getContext()
-                            .setAuthentication(authentication);
+                        SecurityContextHolder.getContext()
+                                .setAuthentication(authentication);
+                    }
                 }
             }
 
         } catch (Exception e) {
-
-
             SecurityContextHolder.clearContext();
         }
 
