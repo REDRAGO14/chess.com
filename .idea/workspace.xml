@@ -6,6 +6,60 @@
   <component name="ChangeListManager">
     <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="chapa integration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Config/ChessConstants.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Config/WebSocketConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/GameController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/GameWebSocketController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/MoveController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Controller/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/CreateGameRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/ErrorResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/GameResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/JoinGameRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/MoveRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/ResignGameRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/StartGameRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/UserRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/DTO/UserResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/FileSecurityException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/GameNotFoundException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/GlobalExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/InsufficientBalanceException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/InvalidAmountException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/InvalidGameStateException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/InvalidMoveException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/LockConflictException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/NotAGameParticipantException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/NotYourTurnException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/PaymentGatewayException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/UserNameAlreadyInUseException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/UserNotFound.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/WalletNotFoundException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Listener/WebSocketEventListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/AuthRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/EscrowStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Model/GameStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Repository/UserRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Security/JwtAuthenticationFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Security/JwtService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Security/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Security/WebSocketAuthInterceptor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/AuthService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/ChessBoardService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/CustomUserDetailService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Service/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Util/JWTUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/migration/V1__create_initial_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/migration/V2__game_lifecycle.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/migration/V3__money_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/chess-test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/game/chess/ChessApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/game/chess/ChesslibSmokeTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +126,7 @@
     "Spring Boot.ChessApplication.executor": "Run",
     "Spring Boot.Unnamed.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "Merging master",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm"
   }
@@ -83,7 +137,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MoveServiceTest.illegalPawnJumpIsRejected">
+  <component name="RunManager" selected="Spring Boot.Unnamed">
     <configuration name="MoveServiceTest.illegalPawnJumpIsRejected" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="chess" />
       <extension name="coverage">
@@ -264,7 +318,15 @@
       <option name="project" value="LOCAL" />
       <updated>1793813107171</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="chapa integration">
+      <option name="closed" value="true" />
+      <created>1793912665017</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1793912665017</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
