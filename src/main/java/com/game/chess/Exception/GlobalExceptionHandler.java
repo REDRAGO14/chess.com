@@ -166,4 +166,10 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "UNEXPECTED_Error", "An unexpected error occurred. Please contact support if the issue persists", req.getRequestURI());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    //Handles  payment not found
+    @ExceptionHandler(PaymentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlePaymentNotFound(PaymentNotFoundException ex, HttpServletRequest req){
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "PAYMENT_NOT_FOUND", ex.getMessage(), req.getRequestURI());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }
