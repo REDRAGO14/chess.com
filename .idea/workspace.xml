@@ -5,8 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="chapa integration">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/DepositStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Controller/AdminDepositController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Controller/DepositController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/ManualDepositRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/ManualDepositResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Exception/DepositNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/ManualDeposit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Repository/ManualDepositRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/AdminDepositService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/SecureUploadService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/ser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/GlobalExceptionHandler.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,24 +72,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.ChessApplicationTests.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MoveServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MoveServiceTest.illegalPawnJumpIsRejected.executor&quot;: &quot;Debug&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ChessApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.ChessApplicationTests.executor": "Run",
+    "JUnit.MoveServiceTest.executor": "Run",
+    "JUnit.MoveServiceTest.illegalPawnJumpIsRejected.executor": "Debug",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.ChessApplication.executor": "Run",
+    "Spring Boot.Unnamed.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "Redragon",
+    "kotlin-language-version-configured": "true",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.game.chess" />
