@@ -5,12 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="chapa integration">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Config/ResilienceConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Controller/BankVerificationTestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/BankVerifyRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/BankVerifyResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/VerificationResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/BankVerificationClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/MockBankVerificationClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/ResilientVerificationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/ChessApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/ChessApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/ChapaPaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/ChapaPaymentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/ChessApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/game/chess/ChessApplication.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1793813107171</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="chapa integration">
+      <option name="closed" value="true" />
+      <created>1793901714140</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1793901714140</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
