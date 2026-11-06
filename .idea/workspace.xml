@@ -49,12 +49,12 @@
     &quot;assignee&quot;: &quot;biruk24&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/REDRAGO14/chess.com.git",
-    "accountId": "da648e9d-c97d-47fb-a149-fce25e703a50"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/REDRAGO14/chess.com.git&quot;,
+    &quot;accountId&quot;: &quot;da648e9d-c97d-47fb-a149-fce25e703a50&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -96,7 +96,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.MoveServiceTest.illegalPawnJumpIsRejected">
     <configuration name="MoveServiceTest.illegalPawnJumpIsRejected" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="chess" />
       <extension name="coverage">
