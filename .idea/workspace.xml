@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="chapa integration">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Controller/AdminDepositController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Controller/DepositController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/ManualDepositRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/DTO/ManualDepositResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Exception/DepositNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Model/ManualDeposit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Repository/ManualDepositRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/AdminDepositService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/SecureUploadService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Service/ser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/game/chess/Security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/game/chess/Exception/GlobalExceptionHandler.class" beforeDir="false" />
-    </list>
+    <list default="true" id="6f751072-0c93-4969-bc69-6d570b3aded3" name="Changes" comment="chapa integration" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -85,7 +70,7 @@
     "Spring Boot.ChessApplication.executor": "Run",
     "Spring Boot.Unnamed.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "Redragon",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm"
   }
@@ -293,7 +278,63 @@
       <option name="project" value="LOCAL" />
       <updated>1793913615280</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="feat(deposit): add ManualDeposit entity, DepositStatus enum, and repository">
+      <option name="closed" value="true" />
+      <created>1793964352785</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1793964352785</updated>
+    </task>
+    <task id="LOCAL-00020" summary="feat(deposit): add ManualDepositRequest and ManualDepositResponse DTOs">
+      <option name="closed" value="true" />
+      <created>1793964365389</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1793964365389</updated>
+    </task>
+    <task id="LOCAL-00021" summary="feat(upload): implement SecureUploadService with magic bytes and path traversal defense">
+      <option name="closed" value="true" />
+      <created>1793964383403</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1793964383403</updated>
+    </task>
+    <task id="LOCAL-00022" summary="feat(exception): add DepositNotFoundException and map to GlobalExceptionHandler">
+      <option name="closed" value="true" />
+      <created>1793964405145</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1793964405145</updated>
+    </task>
+    <task id="LOCAL-00023" summary="feat(deposit): implement ManualDepositService and user DepositController">
+      <option name="closed" value="true" />
+      <created>1793964482858</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1793964482858</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat(security):protect admin endpoints">
+      <option name="closed" value="true" />
+      <created>1793964514434</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1793964514434</updated>
+    </task>
+    <task id="LOCAL-00025" summary="feat(admin): implement AdminDepositService and AdminDepositController">
+      <option name="closed" value="true" />
+      <created>1793964526239</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1793964526239</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,7 +360,14 @@
     <MESSAGE value="code that pass all test case" />
     <MESSAGE value="fully working code till week 3 day 4 task" />
     <MESSAGE value="chapa integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="chapa integration" />
+    <MESSAGE value="feat(deposit): add ManualDeposit entity, DepositStatus enum, and repository" />
+    <MESSAGE value="feat(deposit): add ManualDepositRequest and ManualDepositResponse DTOs" />
+    <MESSAGE value="feat(upload): implement SecureUploadService with magic bytes and path traversal defense" />
+    <MESSAGE value="feat(exception): add DepositNotFoundException and map to GlobalExceptionHandler" />
+    <MESSAGE value="feat(deposit): implement ManualDepositService and user DepositController" />
+    <MESSAGE value="feat(security):protect admin endpoints" />
+    <MESSAGE value="feat(admin): implement AdminDepositService and AdminDepositController" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(admin): implement AdminDepositService and AdminDepositController" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
