@@ -134,6 +134,16 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_GATEWAY.value(), "PAYMENT_GATEWAY_ERROR", ex.getMessage(), req.getRequestURI());
         return new ResponseEntity<>(error, HttpStatus.BAD_GATEWAY);
     }
+    @ExceptionHandler(DepositNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleDepositNotFound(DepositNotFoundException ex, HttpServletRequest req) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "DEPOSIT_NOT_FOUND",
+                ex.getMessage(),
+                req.getRequestURI()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 
     //here i have handled path variable validation exception
     @ExceptionHandler(ConstraintViolationException.class)
